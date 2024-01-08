@@ -13,7 +13,8 @@ const roomSchema = new Schema({
     count:{
         default: 0,
         required: true,
-        type: Number
+        type: Number,
+        max: [4, "Room limit reached!!"]
     },
     code:{
         required: true,

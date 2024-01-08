@@ -17,25 +17,13 @@ const io = new Server(httpServer, {
     }
 })
 
-var count = 0
+const {UserJoin} = require('./Controllers/SocketController/UserJoin')(io)
 
-io.on("connection", (socket)=>{
-    console.log("new connection detected")
-    socket.on("user-connection", (data)=>{
-        count = count+1
-        io.emit("mouse-connection",{
-            userCount: count,
-            username: data.name
-        })
-    })
-    socket.on("mouse-move", (data)=>{
-        // console.log(data)
-        // socket.broadcast.emit - broadcast the msg to all the clients except the sender. 
-        // socket.emit() - sends msg to the sender
-        // io.emit() - sends msg to all the connected client
-        socket.broadcast.emit("mouse-location", data)  
-    })
-})
+const onConnection = (socket)=>{
+    socket.on("user:new", UserJoin)
+}
+
+io.on("connection", onConnection)
 
 const roomRouter = require('./Routes/room.routes')
 app.use('/api/room', roomRouter)
@@ -43,11 +31,10 @@ app.use('/api/room', roomRouter)
 mongoose.set("strictQuery", false)
 mongoose.connect(process.env.MONGO_URI)
     .then(()=>{
-        app.listen(8000, ()=>{
-            console.log("Connected to db")
-        })
+        console.log("Connected to db")
     }).catch((err)=>{
         console.log(err.message)
     })
-
-httpServer.listen(5000)
+    
+const port = process.env.PORT
+httpServer.listen(port)
