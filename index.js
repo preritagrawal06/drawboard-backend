@@ -18,9 +18,11 @@ const io = new Server(httpServer, {
 })
 
 const {UserJoin} = require('./Controllers/SocketController/UserJoin')(io)
+const {UserLeave} = require('./Controllers/SocketController/UserLeave')(io)
 
 const onConnection = (socket)=>{
     socket.on("user:new", UserJoin)
+    socket.on("user:leave", UserLeave)
 }
 
 io.on("connection", onConnection)
