@@ -12,13 +12,11 @@ const CreateRoom = (req, res)=>{
     const room = new Room({
         admin,
         code,
-        members: [admin],
-        count: 1,
     })
 
     room.save()
         .then((room)=>{
-            res.json({
+            res.json({ 
                 success: true,
                 message: "Room created successfully",
                 room

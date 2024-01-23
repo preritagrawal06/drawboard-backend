@@ -12,12 +12,7 @@ const JoinRoom = (req, res) => {
                 })
             }
             else{
-                Room.findOneAndUpdate({code: room_code}, {
-                    $push:{
-                        members: username
-                    },
-                    $inc: {count: 1}
-                }, {new: true, runValidators: true, upsert: true}).then((room)=>{
+                Room.findOne({code: room_code}).then((room)=>{
                     res.json({
                         success: true,
                         message: "You have joined the room",

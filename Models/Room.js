@@ -8,7 +8,8 @@ const roomSchema = new Schema({
     },
     members: [{
         type: String,
-        required: true
+        required: true,
+        default: []
     }],
     count:{
         default: 0,
