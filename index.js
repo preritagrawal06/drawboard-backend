@@ -19,10 +19,16 @@ const io = new Server(httpServer, {
 
 const {UserJoin} = require('./Controllers/SocketController/UserJoin')(io)
 const {UserLeave} = require('./Controllers/SocketController/UserLeave')(io)
+const {MouseMove} = require('./Controllers/SocketController/mouseMove')(io)
+const {MouseDraw}= require('./Controllers/SocketController/mouseDraw')(io)
+const {MouseDown} = require('./Controllers/SocketController/mouseDown')(io)
 
 const onConnection = (socket)=>{
     socket.on("user:new", UserJoin)
     socket.on("user:leave", UserLeave)
+    socket.on("mouse:move", MouseMove)
+    socket.on("mouse:draw", MouseDraw)
+    socket.on("mouse:down", MouseDown)
     socket.on("disconnect", UserLeave)
 }
 
