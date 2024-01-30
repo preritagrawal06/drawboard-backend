@@ -5,7 +5,8 @@ module.exports = (io)=>{
         const code = data.code
         const x = data.x
         const y = data.y
-        socket.to(code).emit("mouse:location", {x, y})
+        const memberName = data.memberName
+        socket.to(code).emit("mouse:location", {x, y, memberName})
     }
     return{
         MouseMove
