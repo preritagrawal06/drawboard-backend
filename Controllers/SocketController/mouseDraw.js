@@ -5,7 +5,8 @@ module.exports = (io)=>{
         const code = data.code
         const x = data.x
         const y = data.y
-        socket.to(code).emit("mouse:ondraw", {x, y})
+        const color = data.color
+        socket.to(code).emit("mouse:ondraw", {x, y, color})
     }
     return{
         MouseDraw
