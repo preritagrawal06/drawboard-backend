@@ -34,7 +34,10 @@ const onConnection = (socket)=>{
 
 io.on("connection", onConnection)
 
+const healthController = require('./Controllers/healthController/healthController')
+app.get('/health', healthController)
 const roomRouter = require('./Routes/room.routes')
+const cronUtil = require('./cronUtil')
 app.use('/api/room', roomRouter)
 
 mongoose.set("strictQuery", false)
@@ -45,5 +48,7 @@ mongoose.connect(process.env.MONGO_URI)
         console.log(err.message)
     })
     
+cronUtil()
 const port = process.env.PORT
 httpServer.listen(port)
+// module.exports = httpServer

@@ -1,0 +1,52 @@
+
+service: RestApi
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorySize: 2048
+  stage: dev
+  timeout: 15
+  region: ap-south-1
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+# you can add packaging information here
+#package:
+#  patterns:
+#    - '!exclude-me.js'
+#    - '!exclude-me-dir/**'
+#    - include-me.js
+#    - include-me-dir/**
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http: 
+          path: /
+          method: any
+          cors: true
+      - http: 
+          path: /{proxy+}
+          method: any
+          cors: true
+       
+    environment:
+      MONGO_URI: <mongo-uri>
+      PORT: 5000
+      TOKEN_SECRET: <token-secret>
+
+# you can add CloudFormation resource templates here
+#resources:
+#  Resources:
+#    NewResource:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        BucketName: my-new-bucket
+#  Outputs:
+#     NewOutput:
+#       Description: "Description for the output"
+#       Value: "Some output value"
